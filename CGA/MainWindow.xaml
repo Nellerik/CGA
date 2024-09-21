@@ -8,7 +8,7 @@
         Title="CGA" Height="1030" Width="1900" WindowStartupLocation="CenterScreen" WindowState="Maximized">
     <Window.Resources>
         <ControlTemplate x:Key="PixelButton" TargetType="{x:Type ButtonBase}">
-            <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="White" BorderThickness="0" SnapsToDevicePixels="true">
+            <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="LightGray" BorderThickness="0" SnapsToDevicePixels="true">
                 <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
             </Border>
             <ControlTemplate.Triggers>
@@ -38,7 +38,13 @@
         </Grid.ColumnDefinitions>
 
         <TabControl Grid.Column="1" Margin="0, 5, 0, 0">
-            <TabItem Header="Отрезки"></TabItem>
+            <TabItem Header="Отрезки">
+                <StackPanel Orientation="Horizontal">
+                    <Button Margin="10, 10" Padding="10" Click="DDA_Click">ЦДА</Button>
+                    <Button Margin="10, 10" Padding="10" Click="Bresenham_Click">Бразенхем</Button>
+                    <Button Margin="10, 10" Padding="10" Click="Vu_Click">Ву</Button>
+                </StackPanel>
+            </TabItem>
             <TabItem Header="Линии второго порядка"></TabItem>
         </TabControl>
 
@@ -49,7 +55,10 @@
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
 
-            <Grid x:Name="Canvas" Background="White"/>
+            <Border BorderBrush="Black" BorderThickness="1">
+                <Grid x:Name="Canvas" Background="White"/>
+            </Border>
+
             <DataGrid x:Name="Table" Grid.Column="2" AutoGenerateColumns="True" FontSize="20"/>
         </Grid>
     </Grid>

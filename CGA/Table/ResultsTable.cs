@@ -41,13 +41,13 @@ namespace CGA.Table
             }
         }
 
-        public void AddRow(DDAResultRow row)
+        public void AddRow<T>(T row) where T: DynamicRow
         {
             if (rows.Count == 0)
-                UpdateDataGridColumns<DDAResultRow>();
+                UpdateDataGridColumns<T>();
 
-            if (rows.Count > 0 && rows.First() is not DDAResultRow)
-                UpdateDataGridColumns<DDAResultRow>();
+            if (rows.Count > 0 && rows.First() is not T)
+                UpdateDataGridColumns<T>();
 
             rows.Add(row);
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -41,6 +42,7 @@ namespace CGA
                     Button button = new Button();
                     button.Click += Pixel_Click;
                     button.Template = MainWindow.pixelButtonTemplate;
+                    button.Background = Brushes.White;
                     Grid.SetRow(button, i);
                     Grid.SetColumn(button, j);
                     canvas.Children.Add(button);
@@ -58,8 +60,20 @@ namespace CGA
         }
         public void Plot(int x, int y, SolidColorBrush brush)
         {
+            if (x > 29 || y > 29)
+                return;
+
             Button button = FindPixelByCoordinates(x, y);
             button.Background = brush;
+        }
+
+        public void Plot(int x, int y, double c)
+        {
+            if (x > 29 || y > 29)
+                return;
+
+            Button button = FindPixelByCoordinates(x, y);
+            button.Background = new SolidColorBrush(Color.FromArgb((byte)(255 * c), 0, 0, 0));
         }
         private Button FindPixelByCoordinates(int x, int y)
         {
