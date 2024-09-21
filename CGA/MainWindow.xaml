@@ -24,7 +24,7 @@
             </ControlTemplate.Triggers>
         </ControlTemplate>
     </Window.Resources>
-    <Grid Background="AntiqueWhite">
+    <Grid Background="AliceBlue">
         <Grid.RowDefinitions>
             <RowDefinition Height="0.7*"/>
             <RowDefinition Height="10"/>
@@ -37,6 +37,11 @@
             <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
 
+        <TabControl Grid.Column="1" Margin="0, 5, 0, 0">
+            <TabItem Header="Отрезки"></TabItem>
+            <TabItem Header="Линии второго порядка"></TabItem>
+        </TabControl>
+
         <Grid Grid.Row="2" Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
@@ -45,15 +50,7 @@
             </Grid.ColumnDefinitions>
 
             <Grid x:Name="Canvas" Background="White"/>
-            <DataGrid x:Name="Table" Grid.Column="2" AutoGenerateColumns="False">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Шаг" Binding="{Binding iterationNumber}" />
-                    <DataGridTextColumn Header="X" Binding="{Binding x}" />
-                    <DataGridTextColumn Header="Y" Binding="{Binding y}" />
-                    <DataGridTextColumn Header="plotX" Binding="{Binding plotX}" />
-                    <DataGridTextColumn Header="plotY" Binding="{Binding plotY}" />
-                </DataGrid.Columns>
-            </DataGrid>
+            <DataGrid x:Name="Table" Grid.Column="2" AutoGenerateColumns="True" FontSize="20"/>
         </Grid>
     </Grid>
 </Window>

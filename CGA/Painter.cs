@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CGA.Table;
+using CGA.Table.Rows;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -15,14 +17,18 @@ namespace CGA
         private Canvas canvas;
         private List<Pixel> clickedPixels = new();
 
-        public Painter(Grid canvasGrid)
+        private ResultsTable table;
+
+        public Painter(Grid canvasGrid, ResultsTable table)
         {
             canvas = new Canvas(canvasGrid, (p) =>
             {
                 clickedPixels.Add(p);
-                canvas.Plot(p.x, p.y, Brushes.Red);
+                if (clickedPixels.Count == 1)
+                    canvas.Plot(p.x, p.y, Brushes.Black);
                 Draw();
             });
+            this.table = table;
         }
 
         public void Draw()
@@ -30,7 +36,7 @@ namespace CGA
             if (clickedPixels.Count < 2)
                 return;
 
-            MainWindow.iterationResults.Clear();
+            table.Clear();
             DrawLineDDA(clickedPixels[0], clickedPixels[1]);
             clickedPixels.Clear();
         }
@@ -47,17 +53,64 @@ namespace CGA
             float x = p1.x + Integer(0.5f * Sign(dx));
             float y = p1.y + Integer(0.5f * Sign(dy));
             canvas.Plot(Integer(x), Integer(y), Brushes.Black);
-            MainWindow.iterationResults.Add(new IterationResult(0, x, -1*(y-29), Integer(x), Integer(-1 * (y - 29))));
+            table.AddRow(new DDAResultRow(0, x, -1*(y-29), Integer(x), Integer(-1 * (y - 29))));
 
             for(int i = 0; i < length; i++)
             {
                 x += dx;
                 y += dy;
                 canvas.Plot(Integer(x), Integer(y), Brushes.Black);
-                MainWindow.iterationResults.Add(new IterationResult(i + 1, x, -1 * (y - 29), Integer(x), Integer(-1 * (y - 29))));
+                table.AddRow(new DDAResultRow(i + 1, x, -1 * (y - 29), Integer(x), Integer(-1 * (y - 29))));
             }
         }
 
+        private void DrawLineBresenham(Pixel p1, Pixel p2)
+        {
+            int x = p1.x;
+            int y = p1.y;
+            int deltaX = Math.Abs(p2.x - p1.x);
+            int deltaY = Math.Abs(p2.y - p1.y);
+            int e;
+            canvas.Plot(x, y, Brushes.Black);
+
+            int xInk = p2.x >= p1.x ? 1 : -1;
+            int yInk = p2.y >= p1.y ? 1 : -1;
+
+            if (deltaX > deltaY)
+            {
+                e = 2 * deltaY - deltaX;
+
+                for (int i = 0; i < deltaX; i++)
+                {
+                    if (e >= 0)
+                    {
+                        y = y + yInk;
+                        e = e - 2 * deltaX;
+                    }
+
+                    x = x + xInk;
+                    e = e + 2 * deltaY;
+                    canvas.Plot(x, y, Brushes.Black);
+                }
+            }
+            else
+            {
+                e = 2 * deltaX - deltaY;
+
+                for(int i = 0; i < deltaY; i++)
+                {
+                    if (e >= 0)
+                    {
+                        x = x + xInk;
+                        e = e - 2 * deltaY;
+                    }
+
+                    y = y + yInk;
+                    e = e + 2 * deltaX;
+                    canvas.Plot(x, y, Brushes.Black);
+                }
+            }
+        }
         private int Sign(float num)
         {
             if (num < 0)

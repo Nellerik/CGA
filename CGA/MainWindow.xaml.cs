@@ -9,6 +9,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CGA.Table;
+using CGA.Table.Rows;
 
 namespace CGA
 {
@@ -19,15 +21,15 @@ namespace CGA
     {
         public static ControlTemplate pixelButtonTemplate;
         private Painter painter;
-        public static ObservableCollection<IterationResult> iterationResults;
+        //public static ObservableCollection<DDAResultRow> DDAResultRows;
 
         public MainWindow()
         {
             InitializeComponent();
             pixelButtonTemplate = (ControlTemplate)FindResource("PixelButton");
-            painter = new Painter(Canvas);
-            iterationResults = new ObservableCollection<IterationResult>();
-            Table.ItemsSource = iterationResults;
+            painter = new Painter(Canvas, new ResultsTable(Table));
+            //DDAResultRows = new ObservableCollection<DDAResultRow>();
+            //Table.ItemsSource = DDAResultRows;
         }
     }
 }

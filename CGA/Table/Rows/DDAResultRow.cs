@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CGA
+namespace CGA.Table.Rows
 {
-    public class IterationResult
+    public class DDAResultRow : DynamicRow
     {
         public int iterationNumber { get; set; }
         public float x { get; set; }
@@ -14,7 +14,7 @@ namespace CGA
         public int plotX { get; set; }
         public int plotY { get; set; }
 
-        public IterationResult(int iterationNumber, float x, float y, int plotX, int plotY)
+        public DDAResultRow(int iterationNumber, float x, float y, int plotX, int plotY)
         {
             this.iterationNumber = iterationNumber;
             this.x = x;
