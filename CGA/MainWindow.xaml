@@ -7,6 +7,12 @@
         mc:Ignorable="d"
         Title="CGA" Height="1030" Width="1900" WindowStartupLocation="CenterScreen" WindowState="Maximized">
     <Window.Resources>
+        <Style x:Key="ToolBarButton" TargetType="Button">
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Margin" Value="10, 20"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="MinWidth" Value="60"/>
+        </Style>
         <ControlTemplate x:Key="PixelButton" TargetType="{x:Type ButtonBase}">
             <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="LightGray" BorderThickness="0" SnapsToDevicePixels="true">
                 <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
@@ -39,10 +45,10 @@
 
         <TabControl Grid.Column="1" Margin="0, 5, 0, 0">
             <TabItem Header="Отрезки">
-                <StackPanel Orientation="Horizontal">
-                    <Button Margin="10, 10" Padding="10" Click="DDA_Click">ЦДА</Button>
-                    <Button Margin="10, 10" Padding="10" Click="Bresenham_Click">Бразенхем</Button>
-                    <Button Margin="10, 10" Padding="10" Click="Vu_Click">Ву</Button>
+                <StackPanel x:Name="ToolBar" Orientation="Horizontal">
+                    <Button x:Name="DDAAlghoritmSelectButton" Style="{StaticResource ToolBarButton}" Click="DDA_Click">ЦДА</Button>
+                    <Button Style="{StaticResource ToolBarButton}" Click="Bresenham_Click">Бразенхем</Button>
+                    <Button Style="{StaticResource ToolBarButton}" Click="Vu_Click">Ву</Button>
                 </StackPanel>
             </TabItem>
             <TabItem Header="Линии второго порядка"></TabItem>

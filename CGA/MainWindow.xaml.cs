@@ -1,16 +1,6 @@
-﻿using System.Collections.ObjectModel;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using CGA.Table;
-using CGA.Table.Rows;
 
 namespace CGA
 {
@@ -27,21 +17,43 @@ namespace CGA
             InitializeComponent();
             pixelButtonTemplate = (ControlTemplate)FindResource("PixelButton");
             painter = new Painter(Canvas, new ResultsTable(Table));
+            previousSender = DDAAlghoritmSelectButton;
+            previousSender.IsEnabled = false;
         }
+
+        Button previousSender;
 
         private void DDA_Click(object sender, RoutedEventArgs e)
         {
             painter.alghoritm = Alghoritm.DigitalDifferentialAnalyzer;
+            if (sender is Button s)
+            {
+                previousSender.IsEnabled = true;
+                previousSender = s;
+                previousSender.IsEnabled = false;
+            }
         }
 
         private void Bresenham_Click(object sender, RoutedEventArgs e)
         {
             painter.alghoritm = Alghoritm.Bresenham;
+            if (sender is Button s)
+            {
+                previousSender.IsEnabled = true;
+                previousSender = s;
+                previousSender.IsEnabled = false;
+            }
         }
 
         private void Vu_Click(object sender, RoutedEventArgs e)
         {
             painter.alghoritm = Alghoritm.Vu;
+            if (sender is Button s)
+            {
+                previousSender.IsEnabled = true;
+                previousSender = s;
+                previousSender.IsEnabled = false;
+            }
         }
     }
 }
